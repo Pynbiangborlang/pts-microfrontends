@@ -1,0 +1,32 @@
+.pts-main-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+.pts-sidebar {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 1px 1px 1px rgb(216 210 210);
+  width: 6%;
+  height: 100%;
+}
+.pts-dashboard-content {
+  display: inline-flex;
+  flex-direction: column;
+  width: 94%;
+}
+.pts-dashboard-sidebar-link {
+  text-decoration: none;
+}
+body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+}
+.root {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+}
