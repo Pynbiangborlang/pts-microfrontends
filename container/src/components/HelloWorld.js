@@ -1,16 +1,16 @@
-// container/src/components/HelloReactApp.js
 import { mount } from "helloWorld/HelloWorld";
 import React, { useRef, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { createMemoryHistory } from "history";
+
+const history = createMemoryHistory();
 
 export default () => {
   const ref = useRef(null);
-  const history = useHistory();
 
   useEffect(() => {
     const { onParentNavigate } = mount(ref.current);
     history.listen(onParentNavigate);
   }, []);
 
-  return <div ref={ref} />;
+  return <div ref={ref} className="helloworld-container" />;
 };

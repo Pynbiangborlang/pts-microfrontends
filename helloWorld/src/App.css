@@ -1,0 +1,10 @@
+.helloWord-container {
+  width: 100%;
+  height: 100%;
+}
+.hw-header {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  box-shadow: 1px 1px 1px rgb(216 210 210);
+}

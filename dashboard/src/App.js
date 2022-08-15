@@ -1,29 +1,40 @@
 import React, { useRef, useState } from "react";
-import { Router, Switch, Route, Link, NavLink } from "react-router-dom";
+import { Routes, Route, Link, NavLink, Router } from "react-router-dom";
 import Overview from "./components/overview/Overview";
-import css from "./components/overview/dashboard.styles.css";
+import css from "./App.css";
 import { HelpOutlineRounded } from "@mui/icons-material";
-import { useEffect } from "react";
+import newhistory from "history/browser";
 
-const App = ({ history }) => {
-  useEffect(() => {
-    if (history.location.pathname === "/dashboard") {
-      history.push("/dashboard/overview");
-    }
-  }, [history.location.pathname]);
-
+const App = ({ history, setHistory }) => {
   const [isHorizontal, setIsHorizontal] = useState(true);
   const [currentTab, setCurrentTab] = useState("Overview");
   const ref = useRef(null);
+
+  let unlisten = newhistory.listen(({ action, location }) => {
+    console.log(location);
+    console.count("i am listening in dashboard");
+    setHistory({ action: action, location: { ...location } });
+  });
+
   return (
-    <Router history={history}>
+    <Router
+      basename=""
+      location={history.location}
+      navigationType={history.action}
+      navigator={newhistory}
+    >
       <div className="pts-dashboard">
         <div>
           {["Overview", "More"].map((tab, i) => (
             <NavLink
               ref={ref}
               key={i}
-              className="pts-nav-links"
+              className={(isActive) =>
+                isActive &&
+                currentTab.toLocaleLowerCase() === tab.toLocaleLowerCase()
+                  ? "pts-nav-links active"
+                  : "pts-nav-links"
+              }
               to={`/dashboard/${tab.toLocaleLowerCase()}`}
               onClick={() => {
                 setCurrentTab(tab);
@@ -47,17 +58,19 @@ const App = ({ history }) => {
       </div>
       <div className="pts-dashboard-content-box">
         <div>
-          <Link to="/dashboard" className="pts-dashboard-link">
+          <Link to="/dashboard/overview" className="pts-dashboard-link">
             <i> Dashboard /</i>
           </Link>
           <span className="pts-dashboard-tab"> {currentTab}</span>
         </div>
       </div>
-      <Switch>
-        <Route exact path="/dashboard" component={() => <div>dashboard</div>} />
-        <Route exact path="/dashboard/overview" component={Overview} />
-        <Route exact path="/dashboard/more" component={() => <div>More</div>} />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<div>Dashboard</div>} />
+        <Route path="/dashboard">
+          <Route path="overview" element={<Overview />} />
+          <Route path="more" element={<div>More</div>} />
+        </Route>
+      </Routes>
     </Router>
   );
 };
