@@ -18,9 +18,9 @@ export default ({ history, setHistory }) => {
   return (
     <div className="helloworld-container">
       <Router
-        basename="/"
+        // basename="/"
         location={history.location}
-        navigationType={history.action}
+        // navigationType={history.action}
         navigator={newhistory}
       >
         <div className="hw-header">
